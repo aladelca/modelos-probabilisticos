@@ -8,7 +8,9 @@ Este mapa convierte el sílabo en una ruta de trabajo para repositorio: cada ses
 - Cada notebook usa datos sintéticos o espacios muestrales generados en código, y varios activan bloques con `data_sources/` si la carpeta existe.
 - Las actividades están pensadas para entregar como informe breve, no como presentación.
 - El material previo está preservado en `legacy/material_original/` y no se trackea.
-- Las fuentes de datos reutilizables están identificadas en `docs/fuentes_datos.md`; los archivos viven en `data_sources/`, carpeta ignorada por git.
+- Las fuentes de datos reutilizables están identificadas en `docs/fuentes_datos.md`; los archivos viven en `data_sources/` y están incluidos en git.
+- El diccionario de datos está en `docs/diccionario_datos.md`.
+- Los problemas están en `ejercicios/` y las soluciones guía en `soluciones/`.
 
 ## Cobertura por unidad
 
@@ -67,6 +69,24 @@ Para que los informes mantengan un estándar común, cada caso puede escribirse 
 | CL6 / TB2 | 06 | Momentos conjuntos, matriz de covarianza, Schwarz |
 | CL7 | 07 | Modelos discretos y selección por supuestos |
 | CL8 / TF | 08 | Modelos continuos, TLC y modelo final documentado |
+
+## Material de práctica
+
+| Carpeta | Contenido | Uso |
+|---|---|---|
+| `ejercicios/sesion_01.md` a `ejercicios/sesion_08.md` | Problemas por sesión | Tarea, práctica en clase o cuestionario formativo |
+| `soluciones/sesion_01.md` a `soluciones/sesion_08.md` | Desarrollo y respuestas guía | Autoevaluación o pauta docente |
+| `ejercicios/casos_integradores.md` | Casos por unidad | Cierre de unidad o preparación para TB/TF |
+| `soluciones/casos_integradores.md` | Soluciones guía | Retroalimentación docente |
+
+## Lectura matemática en notebooks
+
+Cada notebook incluye mini-celdas de lectura antes de bloques computacionales. La intención es que el código no aparezca como una demo aislada, sino como una implementación de un objeto probabilístico:
+
+1. distribución o modelo asumido;
+2. parámetro o funcional estimado;
+3. supuesto que puede fallar;
+4. diagnóstico recomendado.
 
 ## Alineación con el material original
 

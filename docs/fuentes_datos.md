@@ -1,6 +1,6 @@
 # Fuentes de datos del curso
 
-La carpeta `data_sources/` contiene datasets reutilizados del material original. Está ignorada por git para evitar subir datos, resultados generados o archivos pesados. Este documento sí queda trackeado para identificar qué fuente corresponde a cada sesión.
+La carpeta `data_sources/` contiene datasets reutilizados del material original y está incluida en git para que los notebooks funcionen al clonar el repositorio. `legacy/` sí permanece fuera del tracking.
 
 ## Inventario
 

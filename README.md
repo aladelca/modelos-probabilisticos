@@ -4,7 +4,9 @@ Repositorio de clase para el curso **Modelos Probabilísticos**. La estructura e
 
 - `docs/`: apuntes teóricos en Markdown, con definiciones, fórmulas, criterios de uso y actividades.
 - `notebooks/`: notebooks autocontenidos en Python para demostración, simulación y práctica.
-- `data_sources/`: fuentes de datos del material original para usar durante clase. Está ignorada por git.
+- `data_sources/`: fuentes de datos del material original para usar durante clase. Está incluida en git.
+- `ejercicios/`: problemas por sesión y casos integradores.
+- `soluciones/`: soluciones guía para uso docente o autoevaluación.
 - `legacy/material_original/`: material previo conservado sin tracking de git.
 
 ## Orden sugerido
@@ -33,11 +35,14 @@ Los notebooks no dependen de archivos externos: generan datos sintéticos reprod
 
 Si existe `data_sources/`, varios notebooks activan bloques adicionales con datos reales del material original. El inventario y el mapeo por sesión están en `docs/fuentes_datos.md`.
 
+El diccionario probabilístico de datasets está en `docs/diccionario_datos.md`.
+
 ## Cómo usar el repo en clase
 
 1. Antes de clase: leer el Markdown de la sesión y revisar la sección de fórmulas clave.
 2. Durante clase: ejecutar el notebook correspondiente y modificar los parámetros de simulación.
-3. Después de clase: resolver las actividades al final del Markdown y completar las celdas marcadas como práctica.
+3. Después de clase: resolver `ejercicios/sesion_XX.md` y completar las celdas marcadas como práctica.
+4. Para autoevaluación o pauta docente: revisar `soluciones/sesion_XX.md`.
 
 ## Criterio de diseño
 
@@ -54,3 +59,12 @@ La segunda revisión dejó cubiertos los bloques principales del material anteri
 - Sesión 6: covarianza, correlación, Cauchy-Schwarz, PCA, autocovarianza, ARIMA, ARIMAX y VAR.
 - Sesión 7: modelos discretos, churn, conteos, sobredispersión, multiclase, log-loss, costos asimétricos y focal loss.
 - Sesión 8: modelos continuos, ajuste sobre tráfico, teorema del límite central y pérdidas para demanda.
+
+## Refuerzo teoría-código
+
+Los notebooks incluyen celdas **Lectura matemática** antes de bloques clave. Cada una explicita:
+
+- distribución o modelo asumido,
+- parámetro que se estima,
+- supuesto que puede fallar,
+- diagnóstico que conviene mirar.
