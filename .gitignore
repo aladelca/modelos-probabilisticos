@@ -1,0 +1,10 @@
+legacy/
+.DS_Store
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+catboost_info/
+*.log
