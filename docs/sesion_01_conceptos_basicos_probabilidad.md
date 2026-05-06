@@ -17,31 +17,135 @@ Operaciones frecuentes:
 - Intersección: $A \cap B$, ocurre si ocurren ambos.
 - Diferencia: $A \setminus B$, ocurre $A$ pero no $B$.
 
-## Axiomas y reglas
+## Axiomas de Kolmogorov
 
-Una función de probabilidad $P$ debe cumplir:
+La probabilidad moderna se formaliza con una terna:
 
 $$
-P(A) \ge 0,\quad P(\Omega)=1,\quad P(A\cup B)=P(A)+P(B)
+(\Omega,\mathcal{F},P)
 $$
 
-cuando $A$ y $B$ son mutuamente excluyentes.
+donde $\Omega$ es el espacio muestral, $\mathcal{F}$ es la colección de eventos que se pueden medir y $P:\mathcal{F}\rightarrow [0,1]$ es una función que asigna probabilidad a cada evento válido. Los axiomas de Kolmogorov no dicen cómo obtener las probabilidades; establecen las condiciones mínimas de coherencia que cualquier asignación debe respetar.
 
-Consecuencias útiles:
+### Axioma 1: no negatividad
+
+Para todo evento $A\in\mathcal{F}$:
+
+$$
+P(A)\ge 0
+$$
+
+Una probabilidad negativa no tiene interpretación como frecuencia, grado de creencia coherente ni masa de probabilidad. En términos de modelado, este axioma descarta salidas que pueden aparecer por errores numéricos, calibraciones mal definidas o normalizaciones incorrectas.
+
+### Axioma 2: normalización
+
+El evento seguro tiene probabilidad uno:
+
+$$
+P(\Omega)=1
+$$
+
+Esto obliga a que toda la masa de probabilidad se distribuya sobre los resultados posibles considerados por el modelo. Si en una aplicación real $\Omega$ está mal definido, por ejemplo si omite una categoría posible de respuesta o un estado operativo, el modelo puede estar perfectamente calculado dentro de un universo incompleto, pero conceptualmente mal planteado.
+
+### Axioma 3: aditividad numerable
+
+Si $A_1,A_2,\ldots$ son eventos mutuamente excluyentes, es decir, $A_i\cap A_j=\emptyset$ para $i\neq j$, entonces:
+
+$$
+P\left(\bigcup_{i=1}^{\infty} A_i\right)=\sum_{i=1}^{\infty}P(A_i)
+$$
+
+En espacios finitos esta regla se reduce a sumar probabilidades de eventos disjuntos:
+
+$$
+P(A\cup B)=P(A)+P(B)\quad\text{si }A\cap B=\emptyset
+$$
+
+La palabra "numerable" es importante: permite trabajar no solo con dados o cartas, sino también con variables de conteo, tiempos discretizados, procesos estocásticos y límites de secuencias de eventos.
+
+### Consecuencias derivadas de los axiomas
+
+Estas reglas no son axiomas adicionales; se deducen de los tres axiomas anteriores.
+
+**Probabilidad del evento imposible**
+
+Como $\Omega$ y $\emptyset$ son disjuntos y $\Omega\cup\emptyset=\Omega$:
+
+$$
+P(\emptyset)=0
+$$
+
+**Complemento**
+
+Como $A$ y $A^c$ son disjuntos y $A\cup A^c=\Omega$:
 
 $$
 P(A^c)=1-P(A)
 $$
 
+**Monotonía**
+
+Si $A\subseteq B$, entonces $B=A\cup(B\setminus A)$ y los dos eventos son disjuntos. Por tanto:
+
+$$
+P(A)\le P(B)
+$$
+
+Esta propiedad es un buen control de calidad: un evento más restrictivo no puede tener mayor probabilidad que un evento que lo contiene.
+
+**Cota superior**
+
+Para todo evento $A$:
+
+$$
+0\le P(A)\le 1
+$$
+
+La desigualdad superior sale de $A\subseteq\Omega$ y de la monotonía.
+
+**Regla de inclusión-exclusión para dos eventos**
+
+Si $A$ y $B$ no son necesariamente excluyentes:
+
 $$
 P(A\cup B)=P(A)+P(B)-P(A\cap B)
 $$
+
+El término $P(A\cap B)$ se resta porque la intersección fue contada dos veces. Esta corrección es central en problemas de segmentación, campañas de marketing, tests diagnósticos y métricas de cobertura.
+
+**Subaditividad**
+
+Para eventos cualesquiera:
+
+$$
+P(A\cup B)\le P(A)+P(B)
+$$
+
+y, más generalmente:
+
+$$
+P\left(\bigcup_{i=1}^{\infty} A_i\right)\le \sum_{i=1}^{\infty}P(A_i)
+$$
+
+Esta desigualdad se usa cuando no se conoce la intersección entre eventos, pero se necesita una cota conservadora del riesgo total.
+
+### Lectura aplicada de los axiomas
+
+En un notebook o informe, los axiomas aparecen de forma práctica en controles como estos:
+
+- Si se construye una PMF, todas las probabilidades deben ser no negativas y sumar 1.
+- Si se estima una distribución empírica, la frecuencia relativa de todas las categorías observadas debe sumar 1.
+- Si se combinan eventos no excluyentes, debe corregirse el doble conteo.
+- Si una simulación genera resultados fuera de $\Omega$, el espacio muestral o el generador de datos están mal especificados.
+- Si se descarta una categoría rara, debe explicarse si se renormaliza el modelo o si se está condicionando en un subconjunto del espacio muestral.
 
 Si todos los resultados elementales son equiprobables:
 
 $$
 P(A)=\frac{|A|}{|\Omega|}
 $$
+
+Pero esta fórmula es una consecuencia de una asignación uniforme sobre un espacio finito, no una definición general de probabilidad. En aplicaciones reales, asumir equiprobabilidad sin evidencia suele ser el error conceptual más costoso de la sesión.
 
 ## Independencia
 
