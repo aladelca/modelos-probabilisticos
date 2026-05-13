@@ -24,6 +24,22 @@ $$
 P(A\cap B\cap C)=P(A)P(B\mid A)P(C\mid A\cap B)
 $$
 
+### Condicionar como nueva medida de probabilidad
+
+Si $P(B)>0$, podemos definir una nueva función:
+
+$$
+P_B(A)=P(A\mid B)=\frac{P(A\cap B)}{P(B)}
+$$
+
+Esta función vuelve a cumplir los axiomas de Kolmogorov sobre el universo condicionado $B$:
+
+- No negatividad: $P_B(A)\ge 0$.
+- Normalización: $P_B(B)=1$.
+- Aditividad: si $A_1,A_2,\ldots$ son disjuntos, entonces $P_B(\cup_i A_i)=\sum_i P_B(A_i)$.
+
+La lectura aplicada es importante: condicionar no "reduce una probabilidad" necesariamente; cambia la población de referencia. Una tasa de conversión marginal puede ser baja, pero la tasa condicional en un segmento relevante puede ser alta. En sentido inverso, una señal puede parecer fuerte hasta que se considera la tasa base.
+
 ## Particiones
 
 Una colección $\{B_1,\ldots,B_k\}$ es una partición de $\Omega$ si:
@@ -42,6 +58,20 @@ $$
 
 La idea es descomponer la probabilidad de $A$ por escenarios mutuamente excluyentes.
 
+En notación de variables discretas:
+
+$$
+P(A)=\sum_b P(A\mid B=b)P(B=b)
+$$
+
+En notación matricial, si $\pi_b=P(B=b)$ y $\ell_b=P(A\mid B=b)$, entonces:
+
+$$
+P(A)=\ell^\top \pi
+$$
+
+Esto permite implementar el cálculo con vectores, tablas de contingencia o matrices de verosimilitud.
+
 ## Teorema de Bayes como extensión natural
 
 Aunque el sílabo enfatiza probabilidad condicional y probabilidad total, Bayes es una consecuencia directa:
@@ -55,6 +85,26 @@ Interpretación:
 - $P(B_j)$: creencia previa.
 - $P(A\mid B_j)$: verosimilitud de observar $A$ bajo el escenario $B_j$.
 - $P(B_j\mid A)$: creencia posterior luego de observar $A$.
+
+Una derivación útil para clase es:
+
+$$
+P(B_j\mid A)=\frac{P(A\cap B_j)}{P(A)}
+$$
+
+por definición de probabilidad condicional. Luego:
+
+$$
+P(A\cap B_j)=P(A\mid B_j)P(B_j)
+$$
+
+y el denominador se reconstruye por probabilidad total:
+
+$$
+P(A)=\sum_i P(A\mid B_i)P(B_i)
+$$
+
+La fórmula de Bayes no es una regla nueva aislada; es una reorganización de probabilidad condicional más marginalización.
 
 ## Ejemplo guía
 
@@ -77,6 +127,45 @@ P(D\mid +)=\frac{P(+\mid D)P(D)}{P(+)}
 $$
 
 El resultado suele ser menor que la intuición inicial cuando la prevalencia es baja.
+
+## Actualización bayesiana secuencial
+
+Cuando llega más de una evidencia, se puede actualizar paso a paso. Para una hipótesis $H$ y dos evidencias $E_1,E_2$:
+
+$$
+P(H\mid E_1,E_2)
+=
+\frac{P(E_2\mid H,E_1)P(H\mid E_1)}
+{P(E_2\mid H,E_1)P(H\mid E_1)+P(E_2\mid H^c,E_1)P(H^c\mid E_1)}
+$$
+
+Si $E_1$ y $E_2$ son condicionalmente independientes dado $H$ y dado $H^c$, se puede trabajar con odds:
+
+$$
+\frac{P(H\mid E_1,E_2)}{P(H^c\mid E_1,E_2)}
+=
+\frac{P(H)}{P(H^c)}
+\times
+\frac{P(E_1\mid H)}{P(E_1\mid H^c)}
+\times
+\frac{P(E_2\mid H)}{P(E_2\mid H^c)}
+$$
+
+Escrito de forma compacta:
+
+$$
+\text{odds posterior}
+=
+\text{odds prior}\times LR(E_1)\times LR(E_2)
+$$
+
+donde:
+
+$$
+LR(E)=\frac{P(E\mid H)}{P(E\mid H^c)}
+$$
+
+Esta forma es útil en diagnóstico, fraude y riesgo porque cada evidencia multiplica los odds por su razón de verosimilitudes. El supuesto que más suele fallar es la independencia condicional entre evidencias: dos tests o señales basadas en la misma fuente no aportan tanta información como si fueran independientes.
 
 ## Criterios prácticos
 
@@ -196,6 +285,38 @@ $$
 
 Si el valor de información es bajo, recolectar más datos puede no justificar costo operativo.
 
+### Información imperfecta y EVSI
+
+La presentación distingue información perfecta de información imperfecta. En la práctica casi siempre observamos señales ruidosas, no el estado real. Sea $S$ una señal posible, $\theta$ el estado de la naturaleza y $a$ una acción. Primero se calcula:
+
+$$
+P(\theta\mid S=s)=
+\frac{P(S=s\mid \theta)P(\theta)}
+{\sum_{\theta'}P(S=s\mid \theta')P(\theta')}
+$$
+
+Luego, para cada señal, se elige la acción con mayor utilidad esperada posterior:
+
+$$
+EV_{\text{con señal}}
+=
+\sum_s P(S=s)\max_a \sum_\theta U(a,\theta)P(\theta\mid S=s)
+$$
+
+El valor esperado de la información muestral o imperfecta es:
+
+$$
+EVSI = EV_{\text{con señal}}-\max_a \sum_\theta U(a,\theta)P(\theta)
+$$
+
+Debe cumplirse:
+
+$$
+0\le EVSI\le EVPI
+$$
+
+Si el costo de la señal supera el EVSI, comprar esa información destruye valor esperado, incluso si la señal mejora las decisiones.
+
 ### Calibración de probabilidades
 
 En modelos predictivos, una probabilidad condicional estimada debe calibrarse:
@@ -216,6 +337,7 @@ Antes de entregar un análisis de probabilidad condicional:
 - Calcula el denominador con probabilidad total.
 - Interpreta el posterior en lenguaje del caso.
 - Discute sensibilidad ante cambios en priors o tasas de error.
+- Si hay señales, separa EVPI de EVSI y resta el costo de adquirir información.
 
 ## Naive Bayes desde cero con Titanic
 
@@ -251,3 +373,24 @@ P(x_j\mid y=c)=
 $$
 
 El objetivo didáctico no es maximizar accuracy, sino ver que un algoritmo de clasificación puede derivarse directamente de probabilidad condicional, probabilidad total y Bayes.
+
+### Detalles de implementación que deben aparecer en código
+
+Una implementación docente de Naive Bayes debe cuidar:
+
+- Trabajar en log-probabilidades para evitar underflow:
+
+$$
+\log P(Y=y\mid x)=C+\log P(Y=y)+\sum_j \log P(X_j=x_j\mid Y=y)
+$$
+
+- Normalizar los scores con log-sum-exp para recuperar probabilidades que sumen 1.
+- Usar suavizado de Laplace en variables categóricas:
+
+$$
+\hat{P}(X_j=v\mid Y=y)=\frac{n_{jvy}+\alpha}{n_y+\alpha K_j}
+$$
+
+- Evitar fuga de información. En Titanic, columnas como `alive` no deben usarse para predecir `survived`.
+- Reportar al menos accuracy y log-loss; si el objetivo es decisión probabilística, log-loss es más informativo que accuracy.
+- Revisar calibración si las probabilidades se usarán para tomar decisiones con costos asimétricos.
