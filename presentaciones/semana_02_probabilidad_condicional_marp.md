@@ -35,14 +35,28 @@ style: |
     width: 100%;
     border-collapse: collapse;
     font-size: 0.74em;
+    color: #f7f7fb;
   }
   th, td {
     border: 1px solid #4b5563;
     padding: 0.28em 0.38em;
+    color: #f7f7fb;
+    background: rgba(255, 255, 255, 0.055);
   }
   th {
-    background: #242436;
-    color: #ffd166;
+    background: #ffd166;
+    color: #101014;
+    font-weight: 700;
+  }
+  tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.09);
+  }
+  table code {
+    color: #a8dadc;
+    background: #1d1d27;
+  }
+  table mjx-container {
+    color: #f7f7fb;
   }
   section.small {
     font-size: 19px;
@@ -1188,4 +1202,3 @@ En cualquier caso aplicado, exigir:
 - Ejercicios: `ejercicios/sesion_02.md`
 - Soluciones: `soluciones/sesion_02.md`
 - Dataset Titanic: `data_sources/titanic.csv`
-
