@@ -3,17 +3,17 @@ marp: true
 theme: default
 paginate: true
 math: mathjax
-backgroundColor: #101014
-color: #f7f7fb
+backgroundColor: #f8fafc
+color: #111827
 style: |
   section {
-    background: #101014;
-    color: #f7f7fb;
+    background: #f8fafc;
+    color: #111827;
     font-size: 23px;
     letter-spacing: 0;
   }
   h1, h2, h3 {
-    color: #ffd166;
+    color: #0f172a;
   }
   h1 {
     font-size: 2.3em;
@@ -25,38 +25,55 @@ style: |
     font-size: 1.12em;
   }
   strong {
-    color: #8ecae6;
+    color: #075985;
   }
   code, pre {
-    background: #1d1d27;
-    color: #a8dadc;
+    background: #e2e8f0;
+    color: #0f172a;
   }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.74em;
-    color: #f7f7fb;
+  section table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 0.74em !important;
+    color: #111827 !important;
+    background: transparent !important;
   }
-  th, td {
-    border: 1px solid #4b5563;
-    padding: 0.28em 0.38em;
-    color: #f7f7fb;
-    background: rgba(255, 255, 255, 0.055);
+  section table thead,
+  section table tbody,
+  section table tr {
+    background: transparent !important;
   }
-  th {
-    background: #ffd166;
-    color: #101014;
-    font-weight: 700;
+  section table th,
+  section table td {
+    border: 1.5px solid #475569 !important;
+    padding: 0.30em 0.42em !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
   }
-  tr:nth-child(even) td {
-    background: rgba(255, 255, 255, 0.09);
+  section table th {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
   }
-  table code {
-    color: #a8dadc;
-    background: #1d1d27;
+  section table td {
+    background: #ffffff !important;
+    color: #111827 !important;
   }
-  table mjx-container {
-    color: #f7f7fb;
+  section table tr:nth-child(even) td {
+    background: #e2e8f0 !important;
+    color: #111827 !important;
+  }
+  section table code {
+    color: #0f172a !important;
+    background: #cbd5e1 !important;
+  }
+  section table th mjx-container,
+  section table th mjx-container * {
+    color: #ffffff !important;
+  }
+  section table td mjx-container,
+  section table td mjx-container * {
+    color: #111827 !important;
   }
   section.small {
     font-size: 19px;
