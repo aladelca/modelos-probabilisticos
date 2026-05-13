@@ -172,10 +172,9 @@ $$
 P_B(A)=P(A \mid B)=\frac{P(A \cap B)}{P(B)}
 $$
 
-Entonces $P_B$ vuelve a cumplir los axiomas sobre el universo condicionado:
+Entonces $P_B$ vuelve a cumplir los axiomas. Como medida sobre $\Omega$, $P_B(\Omega)=1$; si tomamos $B$ como universo operativo, $P_B(B)=1$.
 
 - $P_B(A)\ge 0$.
-- $P_B(B)=1$.
 - Si los $A_i$ son disjuntos, $P_B(\cup_i A_i)=\sum_i P_B(A_i)$.
 
 Condicionar no siempre reduce una probabilidad. Cambia la referencia.
@@ -211,7 +210,7 @@ Esta igualdad es el puente hacia Bayes.
 Para tres eventos:
 
 $$
-P(A \cap B \cap C)=P(A)P(B \mid A)P(C \mid A,B)
+P(A \cap B \cap C)=P(A)P(B \mid A)P(C \mid A\cap B)
 $$
 
 Para $n$ eventos:
@@ -301,7 +300,7 @@ Esta forma aparece en Bayes, mezclas, ensambles y modelos jerárquicos.
 
 ## Teorema de Bayes
 
-Para una partición $\{B_i\}$:
+Para una partición $\{B_i\}$, con $P(B_i)>0$ y $P(A)>0$:
 
 $$
 P(B_j \mid A)=
@@ -473,7 +472,7 @@ $$
 a^*=\arg\max_a E[U(a,\theta)]
 $$
 
-Una señal solo sirve si cambia la decisión o mejora el valor esperado neto.
+Una señal tiene valor si mejora la política condicionada a la señal y su ganancia esperada supera su costo.
 
 ---
 
@@ -553,7 +552,7 @@ $$
 
 ## Relación entre EVSI y EVPI
 
-Debe cumplirse:
+Antes de costos y asumiendo uso óptimo de la señal, debe cumplirse:
 
 $$
 0\le EVSI\le EVPI
@@ -596,6 +595,8 @@ Regla de Bayes:
 $$
 P(Y=y \mid x)\propto P(Y=y)P(x \mid Y=y)
 $$
+
+Aquí $P(x \mid Y=y)$ se lee como masa de probabilidad si $x$ es discreto y como densidad si $x$ es continuo.
 
 Supuesto naive:
 
@@ -650,10 +651,10 @@ $$
 X_j \mid Y=c \sim N(\mu_{jc},\sigma_{jc}^2)
 $$
 
-Likelihood:
+Likelihood, entendido como densidad condicional:
 
 $$
-P(x_j \mid y=c)=
+f(x_j \mid y=c)=
 \frac{1}{\sqrt{2\pi\sigma_{jc}^2}}
 \exp\left(-\frac{(x_j-\mu_{jc})^2}{2\sigma_{jc}^2}\right)
 $$
