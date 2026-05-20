@@ -340,17 +340,70 @@ $$
 
 ---
 
-## Paso 5.2: reemplazar la likelihood
+## Paso 5.2: qué se reemplaza
 
-Usamos:
+<!-- _class: small -->
+
+El paso anterior dejó:
 
 $$
-P(x \mid Y=c)=
+\hat{c}
+=
+\arg\max_c P(x\mid Y=c)P(Y=c)
+$$
+
+Ahora usamos estimadores aprendidos de los datos:
+
+$$
+P(Y=c)\approx \hat{\pi}_c
+$$
+
+$$
+P(x \mid Y=c)\approx
 \frac{n!}{\prod_{j=1}^{d}x_j!}
 \prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
 $$
 
-Entonces:
+El prior $\hat{\pi}_c$ no sale de la likelihood; viene de la proporción de registros de la clase $c$.
+
+---
+
+## Paso 5.2b: reemplazo línea por línea
+
+<!-- _class: small -->
+
+Usamos:
+
+$$
+\hat{c}
+=
+\arg\max_c P(x\mid Y=c)P(Y=c)
+$$
+
+Sustituimos $P(Y=c)$ por $\hat{\pi}_c$:
+
+$$
+\hat{c}
+=
+\arg\max_c P(x\mid Y=c)\hat{\pi}_c
+$$
+
+Sustituimos $P(x\mid Y=c)$ por la likelihood multinomial:
+
+$$
+\hat{c}
+=
+\arg\max_c
+\left[
+\left(
+\frac{n!}{\prod_{j=1}^{d}x_j!}
+\prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
+\right)
+\hat{\pi}_c
+\right]
+$$
+
+Por conmutatividad de la multiplicación:
 
 $$
 \hat{c}
