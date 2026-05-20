@@ -312,9 +312,151 @@ La segunda parte acumula evidencia feature por feature.
 
 ---
 
+## Paso 5.1: insertar en Bayes
+
+Para clasificar:
+
+$$
+\hat{c}
+=
+\arg\max_c P(Y=c\mid x)
+$$
+
+Por Bayes:
+
+$$
+P(Y=c\mid x)
+=
+\frac{P(x\mid Y=c)P(Y=c)}{P(x)}
+$$
+
+Como $P(x)$ es igual para todas las clases:
+
+$$
+\hat{c}
+=
+\arg\max_c P(x\mid Y=c)P(Y=c)
+$$
+
+---
+
+## Paso 5.2: reemplazar la likelihood
+
+Usamos:
+
+$$
+P(x \mid Y=c)=
+\frac{n!}{\prod_{j=1}^{d}x_j!}
+\prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
+$$
+
+Entonces:
+
+$$
+\hat{c}
+=
+\arg\max_c
+\left[
+\hat{\pi}_c
+\frac{n!}{\prod_{j=1}^{d}x_j!}
+\prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
+\right]
+$$
+
+---
+
+## Paso 5.3: identificar constantes
+
+Para un documento fijo $x$:
+
+$$
+K(x)=\frac{n!}{\prod_{j=1}^{d}x_j!}
+$$
+
+no depende de la clase $c$.
+
+Por tanto:
+
+$$
+\arg\max_c
+\left[
+\hat{\pi}_c K(x)
+\prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
+\right]
+=
+\arg\max_c
+\left[
+\hat{\pi}_c
+\prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
+\right]
+$$
+
+El coeficiente se elimina solo para decidir la clase; no para calcular la probabilidad exacta del vector $x$.
+
+---
+
+## Paso 5.4: aplicar logaritmo
+
+El logaritmo es estrictamente creciente:
+
+$$
+\arg\max_c a_c
+=
+\arg\max_c \log(a_c)
+$$
+
+si $a_c>0$.
+
+Entonces:
+
+$$
+\arg\max_c
+\left[
+\hat{\pi}_c
+\prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
+\right]
+=
+\arg\max_c
+\left[
+\log \hat{\pi}_c
++
+\log
+\prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
+\right]
+$$
+
+---
+
+## Paso 5.5: producto a suma
+
+Usamos dos propiedades:
+
+$$
+\log\prod_{j=1}^{d}a_j
+=
+\sum_{j=1}^{d}\log a_j
+$$
+
+$$
+\log(a^b)=b\log a
+$$
+
+Por tanto:
+
+$$
+\log
+\prod_{j=1}^{d}\hat{\theta}_{cj}^{x_j}
+=
+\sum_{j=1}^{d}x_j\log \hat{\theta}_{cj}
+$$
+
+Los términos con $x_j=0$ no aportan al score.
+
+---
+
 ## Paso 6: score para clasificación
 
-El coeficiente multinomial no depende de la clase. Para $\arg\max$:
+Juntando los pasos anteriores:
 
 $$
 s_c=
@@ -322,6 +464,16 @@ s_c=
 +
 \sum_{j=1}^{d}x_j\log \hat{\theta}_{cj}
 $$
+
+Esto es equivalente a maximizar:
+
+$$
+\hat{\pi}_c
+\frac{n!}{\prod_j x_j!}
+\prod_j\hat{\theta}_{cj}^{x_j}
+$$
+
+pero es más estable numéricamente y más simple de calcular.
 
 Predicción:
 
